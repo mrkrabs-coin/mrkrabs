@@ -1,15 +1,488 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <title>Solid App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-
-    <script src="/src/index.tsx" type="module"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$KRABS - He loves money. Now he loves crypto.</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="$KRABS - The meme coin that Mr. Krabs would love! Fair launch on Solana, 90% liquidity locked. He loves money. Now he loves crypto.">
+    <meta name="keywords" content="KRABS, cryptocurrency, meme coin, Solana, Mr. Krabs, crypto, blockchain, DeFi">
+    <meta name="author" content="Krabs Coin">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mrkrabs.live">
+    <meta property="og:title" content="$KRABS - He loves money. Now he loves crypto.">
+    <meta property="og:description" content="The meme coin that Mr. Krabs would love! Fair launch on Solana, 90% liquidity locked.">
+    <meta property="og:site_name" content="Krabs Coin">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mrkrabs.live">
+    <meta property="twitter:title" content="$KRABS - He loves money. Now he loves crypto.">
+    <meta property="twitter:description" content="The meme coin that Mr. Krabs would love! Fair launch on Solana, 90% liquidity locked.">
+    <meta property="twitter:site" content="@mrkrabs_army">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Animated Background */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(45deg, #000000, #1a0000, #000000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Money Rain Effect */
+        .money-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .money {
+            position: absolute;
+            font-size: 24px;
+            color: #ffd700;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 60px;
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(255, 68, 68, 0.5);
+            border: 4px solid #ffd700;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff4444, #ffd700, #00ff88);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00ff88;
+            font-weight: 600;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ff88; }
+            to { text-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88; }
+        }
+        
+        /* Main Content */
+        .main-content {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .buy-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff4444, #ff6666, #ff4444);
+            background-size: 200% 200%;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 30px 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 68, 68, 0.3);
+            animation: buttonGlow 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .buy-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 68, 68, 0.5);
+            background-position: 100% 0;
+        }
+        
+        .buy-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .buy-button:hover:before {
+            left: 100%;
+        }
+        
+        @keyframes buttonGlow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(255, 68, 68, 0.3); }
+            50% { box-shadow: 0 10px 30px rgba(255, 68, 68, 0.6), 0 0 20px rgba(255, 68, 68, 0.4); }
+        }
+        
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            color: white;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .social-link.twitter {
+            background: linear-gradient(45deg, #1da1f2, #0d8bd9);
+        }
+        
+        .social-link.instagram {
+            background: linear-gradient(45deg, #e1306c, #fd1d1d, #fcb045);
+        }
+        
+        .social-link:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .disclaimer h3 {
+            color: #00ff88;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .disclaimer p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #cccccc;
+        }
+        
+        .highlight {
+            color: #ffd700;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .logo {
+                width: 150px;
+                height: 150px;
+                font-size: 60px;
+            }
+            
+            .buy-button {
+                font-size: 1.2rem;
+                padding: 15px 30px;
+                margin: 20px 10px;
+            }
+            
+            .social-link {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .social-links {
+                gap: 20px;
+            }
+            
+            .disclaimer {
+                padding: 20px;
+                margin: 40px 0;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                width: 120px;
+                height: 120px;
+                font-size: 48px;
+            }
+            
+            .buy-button {
+                font-size: 1rem;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animated"></div>
+    
+    <!-- Money Rain Effect -->
+    <div class="money-rain" id="moneyRain"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">🦀</div>
+            </div>
+            <h1 class="title">$KRABS</h1>
+            <p class="tagline">He loves money. Now he loves crypto.</p>
+            <p class="subtitle">Posting daily until we hit $1M market cap 💰</p>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <a href="#" class="buy-button" id="buyButton">
+                💰 BUY $KRABS 💰
+            </a>
+            
+            <!-- Social Links -->
+            <div class="social-links">
+                <a href="https://x.com/mrkrabs_army" target="_blank" class="social-link twitter" title="Follow us on Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/mrkrabs_coin/" target="_blank" class="social-link instagram" title="Follow us on Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            
+            <!-- Disclaimer -->
+            <div class="disclaimer">
+                <h3>💎 Tokenomics & Disclaimer</h3>
+                <p>
+                    <span class="highlight">90% liquidity</span> • 
+                    <span class="highlight">10% founder (locked)</span> • 
+                    <span class="highlight">Fair launch on Solana</span> • 
+                    Not financial advice.
+                </p>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Krabs Coin ($KRABS). All rights reserved. | mrkrabs.live</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Money Rain Animation
+        function createMoney() {
+            const moneyRain = document.getElementById('moneyRain');
+            const moneySymbols = ['💰', '💵', '💸', '🪙', '💲'];
+            
+            setInterval(() => {
+                const money = document.createElement('div');
+                money.className = 'money';
+                money.textContent = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
+                
+                money.style.left = Math.random() * 100 + '%';
+                money.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                money.style.animationDelay = Math.random() * 2 + 's';
+                
+                moneyRain.appendChild(money);
+                
+                // Remove money element after animation
+                setTimeout(() => {
+                    if (money.parentNode) {
+                        money.parentNode.removeChild(money);
+                    }
+                }, 5000);
+            }, 300);
+        }
+        
+        // Buy Button Click Handler
+        document.getElementById('buyButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Replace with actual trading link when available
+            // For now, it could redirect to a coming soon page or show an alert
+            alert('🚀 Trading link coming soon! Follow our social media for updates. 💰');
+        });
+        
+        // Logo Click Animation
+        document.querySelector('.logo').addEventListener('click', function() {
+            this.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 300);
+        });
+        
+        // Social Links Hover Effect
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 15px 30px rgba(255, 255, 255, 0.3)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            createMoney();
+            
+            // Add entrance animation to elements
+            const elements = document.querySelectorAll('.title, .tagline, .subtitle, .logo, .buy-button, .social-links, .disclaimer');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.8s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+        
+        // Smooth scrolling for mobile
+        if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
 </html>
