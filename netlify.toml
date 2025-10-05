@@ -1,6 +1,4 @@
 [build]
-  command = "vite build"
-  functions = "netlify/functions"
-  publish = "dist"
+  publish = "."
 
-  ## more info on configuring this file: https://www.netlify.com/docs/netlify-toml-reference/
+## more info on configuring this file: https://www.netlify.com/docs/netlify-toml-reference/
